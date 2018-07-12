@@ -85,11 +85,12 @@
     <div class="add-btn">Add</div>
   </form>
   <div id="list"></div>
+  <script src="admin/passwd.js"></script> <!-- git ignored -->
   <script type="text/javascript">
 
     var password = prompt('Password:');
 
-    if (password !== 'palmeirasnaotemmundial') {
+    if (password !== global_passwd) {
       window.location.href = '/';
     }
 
