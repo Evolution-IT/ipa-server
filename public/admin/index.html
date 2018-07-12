@@ -33,6 +33,7 @@
     /* list */
     #list {
       display: block;
+      padding: 1em 0;
     }
     #list .row {
       text-decoration: none;
@@ -79,8 +80,64 @@
   </style>
 </head>
 <body>
+  <form>
+    <input class="file" type="file" name="file" value="" accept=".ipa" />
+    <div class="add-btn">Add</div>
+  </form>
   <div id="list"></div>
+  <script src="admin/passwd.js"></script> <!-- git ignored -->
   <script type="text/javascript">
+
+    var password = prompt('Password:');
+
+    if (password !== global_passwd) {
+      window.location.href = '/';
+    }
+
+    if (IPA.isPC) {
+      document.querySelector('form').style.display = 'flex'
+    }
+
+    function updateAddProgress(progress) {
+      const add = document.querySelector(".add-btn")
+      if (progress === 0) {
+        add.innerHTML = IPA.langString('Add')
+      } else if (progress === 1) {
+        add.innerHTML = IPA.langString('Upload Done!')
+        setTimeout(() => {
+          add.innerHTML = IPA.langString('Add')
+        }, 2000)
+      } else {
+        add.innerHTML = `${(progress*100).toFixed(2)}%`
+      }
+    }
+
+    let uploading = false
+    window.onbeforeunload = () => uploading ? true : undefined
+    document.querySelector(".file").addEventListener("change", e => {
+      if (e.target.files.length === 0) {
+        return;
+      }
+      const data = new FormData()
+      data.append('file', e.target.files[0])
+      uploading = true
+      IPA.fetch('/api/upload', {
+        method: 'POST',
+        body: data,
+      }, progress => {
+        updateAddProgress(progress.loaded / progress.total)
+      }).then(json => {
+        e.target.value = ''
+        uploading = false
+        loadList()
+      }).catch(err => {
+        uploading = false
+        updateAddProgress(0)
+      })
+    })
+    document.querySelector(".add-btn").addEventListener("click", e => {
+      uploading || document.querySelector(".file").click()
+    })
 
     // init lazy load
     const instance = Layzr()
@@ -109,7 +166,8 @@
       window.location.href = 'itms-services://?action=download-manifest&url=' + plist
     }
 
-    window.addEventListener('load', loadList);
+    window.addEventListener('load', loadList)
+    document.querySelector('.add-btn').innerHTML = IPA.langString('Add')
 
   </script>
 </body>

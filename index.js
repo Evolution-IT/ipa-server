@@ -40,7 +40,7 @@ app.use(router.post('/api/upload', upload({
     await ipaManager.add(files[0])
     ctx.body = { meg: 'Upload Done' }
   } catch (err) {
-    console.log('Upload fail:', err)
+    console.error('Upload fail:', err)
     ctx.body = { err: 'Upload fail' }
   }
 })))

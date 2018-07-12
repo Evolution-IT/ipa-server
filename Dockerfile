@@ -1,5 +1,5 @@
 FROM node:8.4.0
-MAINTAINER Steven <s@beeeye.cn>
+MAINTAINER Igor Silva <igor.silva@evolutionit.com.br>
 
 # set work dir
 WORKDIR /app
