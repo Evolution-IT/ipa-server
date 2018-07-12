@@ -49,12 +49,13 @@ const fixPNG = (input, output) => new Promise((resolve, reject) => {
 
 const add = async (file) => {
 
-  const tmpDir = '/tmp/cn.ineva.upload/unzip-tmp' // temp dir
+  const tmpDir = '/tmp/unzip-tmp' // temp dir
   let plistFile, iconFiles = []
 
   // unzip files
-  const newIconRegular = /Payload\/\w*\.app\/AppIcon-?(\d+(\.\d+)?)x(\d+(\.\d+)?)(@\dx)?.*\.png$/
+  const newIconRegular = /Payload\/(\w|\.)*\.app\/AppIcon-?(\d+(\.\d+)?)x(\d+(\.\d+)?)(@\dx)?.*\.png$/
   const oldIconRegular = /Payload\/\w*\.app\/Icon-?(\d+(\.\d+)?)?.png$/
+
   await fs.remove(tmpDir)
   await decompress({
     file: file,

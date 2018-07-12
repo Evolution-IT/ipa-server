@@ -10,4 +10,4 @@ services:
     ports:
       - "9008:8080"
     volumes:
-      - "/docker/data/ipa-server:/app/upload"
+      - "~/ipa-server-data:/app/upload"

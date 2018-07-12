@@ -142,7 +142,8 @@
             <img data-normal="${row.webIcon}" alt="">
             <div class="center">
               <div class="name">${row.name}</div>
-              <div class="version">${row.version}(Build ${row.build})</div>
+              <div class="version">${row.identifier}</div>
+              <div class="version">${row.version} (Build ${row.build}) - ${IPA.sizeStr(row.size)}</div>
               <div class="date">${IPA.langString('Upload Date: ')}${row.date}</div>
             </div>
             <div onclick="onClickInstall('${row.plist}')" class="right">${IPA.langString('Download')}</div>
