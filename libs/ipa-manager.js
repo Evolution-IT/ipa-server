@@ -115,6 +115,7 @@ const add = async (file) => {
     size: (await fs.lstat(file)).size,
     noneIcon: !iconFile,
   }
+
   appList.unshift(app)
   await fs.writeJson(appListFile, appList)
 
