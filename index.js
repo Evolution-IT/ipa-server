@@ -10,6 +10,9 @@ const locale = require('koa-locale')
 const moment = require('moment')
 const path = require('path')
 const publicURL = require('./libs/public-url')
+const https = require('https')
+const fs = require('fs')
+
 
 // locale
 locale(app)
@@ -62,3 +65,13 @@ app.on('error', err => {
 app.listen(config.port, config.host, ()=>{
   console.log(`Server started: http://${config.host}:${config.port}`)
 })
+
+if (config.useHTTPS) {
+
+  const options = {
+    key: fs.readFileSync(`${config.certLocation}/certificate.key`),
+    cert: fs.readFileSync(`${config.certLocation}/certificate.pem`),
+  }
+
+  https.createServer(options, app.callback()).listen(config.port + 1);
+}
