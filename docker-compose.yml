@@ -10,7 +10,7 @@ services:
       - USE_HTTPS=true
       - CERT_LOCATION=/app/certificate
     ports:
-      - "5000:8080"
+      - "5000:8081"
     volumes:
       - "~/ipa-server-data:/app/upload"
       - "/etc/nginx/ipa_server:/app/certificate"
